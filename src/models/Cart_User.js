@@ -1,9 +1,9 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../connect/connection.js";
+import { sequelize } from "../connect/connection.js";
 import User from './User.js';
 import Cart from "./Cart.js";
 
-const Cart_Product = sequelize.define( 'cart_product', {
+const Cart_User = sequelize.define( 'cart_user', {
     id : {
         type : DataTypes.INTEGER,
         primaryKey : true,
@@ -15,6 +15,6 @@ const Cart_Product = sequelize.define( 'cart_product', {
     updatedAt : 'updated'
 } );
 
-Cart.belongsToMany( User, { through : Cart_Product } );
-User.belongsToMany( Cart, { through : Cart_Product } );
-export default Cart_Product;
+Cart.belongsToMany( User, { through : Cart_User } );
+User.belongsToMany( Cart, { through : Cart_User } );
+export default Cart_User;

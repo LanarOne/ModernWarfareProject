@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../connect/connection.js";
-import User from './User';
+import { sequelize } from "../connect/connection.js";
+import User from "./User.js";
 
-const Cart = sequelize.define( '/cart', {
+const Cart = sequelize.define( 'cart', {
     id : {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -12,13 +12,5 @@ const Cart = sequelize.define( '/cart', {
     timestamps : true,
     createdAt : 'created',
     updatedAt : 'updated'
-} );
-
-Cart.hasMany( User, {
-    foreignKey : {
-        allowNull : true,
-        name : 'cartId'
-    },
-    sourceKey : 'id'
 } );
 export default Cart;
