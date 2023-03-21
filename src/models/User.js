@@ -1,7 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../connect/connection.js";
 import Role from "./Role.js";
-import { emailIsValid, passwordIsValid, REGEX } from "../utils/regexUtils.js";
 
 const User = sequelize.define(
   "user",
