@@ -1,5 +1,5 @@
 import { UserDAO } from "../daos/userDao.js";
-import { jwtSign } from "../utils/jwtUtils.js";
+import { jwtSign, jwtVerify } from "../utils/jwtUtils.js";
 import { stringIsFilled } from "../utils/stringUtil.js";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
@@ -62,7 +62,9 @@ const signUp = async (req, res) => {
       roleId
     );
 
+    const id = user.id;
     const token = jwtSign(id);
+    console.log(token);
     return res.status(201).json({
       message: `user ${user.username} successfully created`,
       data: user,
@@ -90,6 +92,7 @@ const signIn = async (req, res) => {
   }
   if (user && isPasswordValid) {
     const token = jwtSign(user.id);
+    console.log(user);
     return res.status(201).json({
       message: `user ${user.username} successfully connected`,
       data: user.email,
@@ -108,7 +111,7 @@ const readAll = async (req, res) => {
   }
   const users = await UserDAO.ReadAllUsers();
   if (!users) {
-    return res.status(404).json({ message: `couldnt find users` });
+    return res.status(404).json({ message: `could not find users` });
   }
   return res
     .status(200)
@@ -129,6 +132,18 @@ const readOne = async (req, res) => {
     .status(200)
     .json({ message: `user ${user.username} successfully found`, data: user });
 };
+const getUser = async (req, res) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(403).json({message : `lacking authorization, please log-in`})
+  }
+  const id = jwtVerify(token)
+  const user = await UserDAO.ReadUserById(id);
+  if (!user) {
+    return res.status(404).json({message:`cannot find user`});
+  }
+  return res.status(200).json({message : `user successfully retrieved`, user})
+}
 
 const updateOne = async (req, res) => {
   const id = req.params.id;
@@ -199,4 +214,5 @@ export const UserController = {
   readOne,
   updateOne,
   deleteOne,
+  getUser,
 };

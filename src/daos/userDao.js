@@ -1,6 +1,5 @@
 import User from "../models/User.js";
 import bcrypt, { hash } from "bcrypt";
-import Role from "../models/Role.js";
 const Create = async (
   email,
   password,

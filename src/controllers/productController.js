@@ -1,5 +1,7 @@
 import { ProductDAO } from "../daos/productDao.js";
 import Product from "../models/Product.js";
+
+
 const createProduct = async (req, res) => {
   try {
     const {
@@ -54,6 +56,8 @@ const createProduct = async (req, res) => {
     return res.status(500).json({ message: `internal error`, data: err });
   }
 };
+
+
 
 const readAll = async (req, res) => {
   const products = await ProductDAO.ReadAllProducts();
