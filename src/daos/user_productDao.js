@@ -27,7 +27,9 @@ const ReadAll = async () => {
 
 const ReadOne = async (id) => {
   try {
-    const user_product = await User_Product.findByPk(id);
+    const user_product = await User_Product.findOne({
+      where: { userId, productId },
+    });
     if (!user_product) {
       return null;
     }
@@ -40,7 +42,9 @@ const ReadOne = async (id) => {
 
 const DeleteOne = async (id) => {
   try {
-    const user_product = await User_Product.findByPk(id);
+    const user_product = await User_Product.findOne({
+      where: { id: productId },
+    });
     if (!user_product) {
       return null;
     }

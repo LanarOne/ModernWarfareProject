@@ -29,6 +29,12 @@ const Product = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    alt: {
+      type: DataTypes.TEXT,
+    },
+    description: {
+      type: DataTypes.TEXT,
+    },
     flying: {
       type: DataTypes.BOOLEAN,
       allowNull: true,

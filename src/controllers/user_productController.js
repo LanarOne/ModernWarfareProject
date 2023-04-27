@@ -4,12 +4,20 @@ import { Cart_UserDAO } from "../daos/cart_userDao.js";
 const create = async (req, res) => {
   const { userId, productId } = req.body;
   if (!userId || !productId) {
-    return res.status(403).json({ message: `userid & productid are required` });
+    return res.status(400).json({ message: `userid & productid are required` });
   }
-  const user_product = await User_ProductDAO.Create(userId, productId);
-  return res
-    .status(201)
-    .json({ message: `user_product successfully created`, data: user_product });
+  try {
+    const user_product = await User_ProductDAO.Create(userId, productId);
+    return res.status(201).json({
+      message: `user_product successfully created`,
+      data: user_product,
+    });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ message: `error creating user_product`, err });
+  }
 };
 
 const readAll = async (req, res) => {

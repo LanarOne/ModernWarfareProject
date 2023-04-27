@@ -1,6 +1,6 @@
 import { ProductDAO } from "../daos/productDao.js";
 import Product from "../models/Product.js";
-
+import { weapons } from "../products.js";
 
 const createProduct = async (req, res) => {
   try {
@@ -10,6 +10,8 @@ const createProduct = async (req, res) => {
       assistance,
       price,
       img,
+      alt,
+      description,
       flying,
       cockpit,
       weapons,
@@ -24,12 +26,18 @@ const createProduct = async (req, res) => {
         .status(409)
         .json({ message: `an item with the name ${name} already exists` });
     }
-    if (!name || !type || !assistance || !price || !img) {
-      return res
-        .status(400)
-        .json({
-          message: `the fields name, type, assistance, price and img are mandatory`,
-        });
+    if (
+      !name ||
+      !type ||
+      !assistance ||
+      !price ||
+      !img ||
+      !alt ||
+      !description
+    ) {
+      return res.status(400).json({
+        message: `the fields name, type, assistance, price and img are mandatory`,
+      });
     }
     const product = await ProductDAO.Create(
       name,
@@ -37,6 +45,8 @@ const createProduct = async (req, res) => {
       assistance,
       price,
       img,
+      alt,
+      description,
       flying,
       cockpit,
       weapons,
@@ -45,20 +55,15 @@ const createProduct = async (req, res) => {
       range,
       typeId
     );
-    return res
-      .status(201)
-      .json({
-        message: `new product ${product.name} successfully created`,
-        data: product,
-      });
+    return res.status(201).json({
+      message: `new product ${product.name} successfully created`,
+      data: product,
+    });
   } catch (err) {
     console.error(err.message);
     return res.status(500).json({ message: `internal error`, data: err });
   }
 };
-
-
-
 const readAll = async (req, res) => {
   const products = await ProductDAO.ReadAllProducts();
   if (!products) {
@@ -75,12 +80,10 @@ const readOneById = async (req, res) => {
   if (!product) {
     return res.status(404).json({ message: `could not find product` });
   }
-  return res
-    .status(200)
-    .json({
-      message: `product ${product.name} retrived successfully`,
-      data: product,
-    });
+  return res.status(200).json({
+    message: `product ${product.name} retrived successfully`,
+    data: product,
+  });
 };
 
 const updateOne = async (req, res) => {
@@ -91,6 +94,8 @@ const updateOne = async (req, res) => {
     assistance,
     price,
     img,
+    alt,
+    description,
     flying,
     cockpit,
     weapons,
@@ -99,7 +104,7 @@ const updateOne = async (req, res) => {
     range,
     typeId,
   } = req.body;
-  if (!name || !type || !assistance || !price || !img) {
+  if (!name || !type || !assistance || !price || !img || !alt || !description) {
     return res
       .status(400)
       .json({ message: `all fields are mandatory to update product` });
@@ -110,6 +115,8 @@ const updateOne = async (req, res) => {
     assistance,
     price,
     img,
+    alt,
+    description,
     flying,
     cockpit,
     weapons,
@@ -122,12 +129,10 @@ const updateOne = async (req, res) => {
   if (!product) {
     return res.status(404).json({ message: `could not find product` });
   }
-  return res
-    .status(200)
-    .json({
-      message: `product ${product.name} successfully updated`,
-      data: product,
-    });
+  return res.status(200).json({
+    message: `product ${product.name} successfully updated`,
+    data: product,
+  });
 };
 
 const deleteOne = async (req, res) => {
