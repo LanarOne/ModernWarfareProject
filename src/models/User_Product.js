@@ -5,20 +5,11 @@ import Product from "./Product.js";
 
 const User_Product = sequelize.define(
   "user_product",
+  {},
   {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    timestamp: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-      allowNull: false,
-    },
-  },
-  {
-    timestamps: false,
+    timestamps: true,
+    createdAt: `created`,
+    updatedAt: `updated`,
     unique: false,
   }
 );

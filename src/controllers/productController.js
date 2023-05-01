@@ -1,6 +1,5 @@
 import { ProductDAO } from "../daos/productDao.js";
 import Product from "../models/Product.js";
-import { weapons } from "../products.js";
 
 const createProduct = async (req, res) => {
   try {
@@ -26,15 +25,7 @@ const createProduct = async (req, res) => {
         .status(409)
         .json({ message: `an item with the name ${name} already exists` });
     }
-    if (
-      !name ||
-      !type ||
-      !assistance ||
-      !price ||
-      !img ||
-      !alt ||
-      !description
-    ) {
+    if (!name || !type || !price || !img || !alt || !description) {
       return res.status(400).json({
         message: `the fields name, type, assistance, price and img are mandatory`,
       });
@@ -104,7 +95,7 @@ const updateOne = async (req, res) => {
     range,
     typeId,
   } = req.body;
-  if (!name || !type || !assistance || !price || !img || !alt || !description) {
+  if (!name || !type || !price || !img || !alt || !description) {
     return res
       .status(400)
       .json({ message: `all fields are mandatory to update product` });
