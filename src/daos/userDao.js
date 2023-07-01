@@ -127,7 +127,7 @@ const DeleteUser = async (id) => {
     if (!user) {
       return null;
     }
-    user.destroy();
+    await user.destroy();
     return `user found and destroyed`;
   } catch (err) {
     console.error(err.message);

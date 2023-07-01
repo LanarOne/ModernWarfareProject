@@ -64,7 +64,6 @@ const signUp = async (req, res) => {
 
     const id = user.id;
     const token = jwtSign(id);
-    console.log(token);
     return res.status(201).json({
       message: `user ${user.username} successfully created`,
       data: user,
@@ -135,15 +134,17 @@ const readOne = async (req, res) => {
 const getUser = async (req, res) => {
   const token = req.headers.authorization;
   if (!token) {
-    return res.status(403).json({message : `lacking authorization, please log-in`})
+    return res
+      .status(403)
+      .json({ message: `lacking authorization, please log-in` });
   }
-  const id = jwtVerify(token)
+  const id = jwtVerify(token);
   const user = await UserDAO.ReadUserById(id);
   if (!user) {
-    return res.status(404).json({message:`cannot find user`});
+    return res.status(404).json({ message: `cannot find user` });
   }
-  return res.status(200).json({message : `user successfully retrieved`, user})
-}
+  return res.status(200).json({ message: `user successfully retrieved`, user });
+};
 
 const updateOne = async (req, res) => {
   const id = req.params.id;

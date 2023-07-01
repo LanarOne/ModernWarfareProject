@@ -8,7 +8,7 @@ const initUserRoutes = (app, sm) => {
   router.post("/signin", sm, UserController.signIn);
   router.get("/getall", jwtMiddleware, sm, UserController.readAll);
   router.get("/getone/:id", jwtMiddleware, sm, UserController.readOne);
-  router.get('/getone', sm, UserController.getUser)
+  router.get("/getone", sm, UserController.getUser);
   router.put("/update/:id", jwtMiddleware, sm, UserController.updateOne);
   router.delete("/delete/:id", jwtMiddleware, sm, UserController.deleteOne);
 

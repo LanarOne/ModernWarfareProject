@@ -8,6 +8,10 @@ export const jwtVerify = (token) => {
   try {
     const decoded = jwt.verify(token, secret);
     const userId = decoded.data;
+    const currentTime = Date.now() / 1000;
+    if (decoded.exp < currentTime) {
+      return null;
+    }
     return userId ? userId : "";
   } catch (err) {
     console.error(`jwtVerify error`, err.message);
